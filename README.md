@@ -12,6 +12,6 @@
 所以返回 [0, 1]
 
 来源：力扣（LeetCode）
-链接：https://leetcode-cn.com/problems/two-sum
+链接：https://leetcode-cn.com/problems/two-p1_two_sum
 
 解决思路：逐个数进行入map，当发现target-num也在map中时，即得到正确答案。复杂度O（n）。

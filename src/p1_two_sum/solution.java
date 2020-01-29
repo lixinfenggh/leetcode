@@ -1,3 +1,5 @@
+package p1_two_sum;
+
 import java.util.*;
 
 class Solution {
