@@ -14,32 +14,29 @@ class ListNode {
 }
 
 class Solution {
-    public void addTwoNumbers(ListNode l1, ListNode l2, ListNode result) {
-        if (result == null)
-            result = new ListNode(0);
-
-        l1 = l1 == null ? new ListNode(0) : l1;
-        l2 = l2 == null ? new ListNode(0) : l2;
-        int sum = l1.val + l2.val + result.val;
-        if (sum > 9) {
-            result.val = sum - 10;
-            result.next = new ListNode(1);
-        } else {
-            result.val = sum;
-        }
-        if (l1.next == null && l2.next == null)
-            return;
-        if (sum <= 9)
-            result.next = new ListNode(0);
-
-        System.out.println(result.val);
-        this.addTwoNumbers(l1.next, l2.next, result.next);
-    }
-
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode result = new ListNode(0);
-        this.addTwoNumbers(l1, l2, result);
-        return result;
+        int up = 0;
+        ListNode cur = result;
+        while (l1 != null || l2 != null) {
+            int l1Val = l1 == null ? 0 : l1.val;
+            int l2Val = l2 == null ? 0 : l2.val;
+            int sum = l1Val + l2Val + up;
+            if (sum < 10) {
+                up = 0;
+            } else {
+                sum = sum - 10;
+                up = 1;
+            }
+            cur.next = new ListNode(sum);
+            cur = cur.next;
+            if (up > 0)
+                cur.next = new ListNode(up);
+
+            if (l1 != null) l1 = l1.next;
+            if (l2 != null) l2 = l2.next;
+        }
+        return result.next;
     }
 
     public static void main(String[] args) {
