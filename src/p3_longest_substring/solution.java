@@ -5,32 +5,27 @@ import java.util.*;
 
 class Solution {
     public int lengthOfLongestSubstring(String s) {
-        Queue<Character> longestSubstring = new LinkedList<>();
-        Queue<Character> checkedSubstring = new LinkedList<>();
-        Map<Character, Integer> checkedMap = new HashMap<>();
-        for (int i = 0; i < s.length(); i++) {
+        int max = 0;
+        int size = s.length();
+        int start = 0;
+        Map<Character, Integer> charIndex = new HashMap<>();
+        for (int i = 0; i < size; i++) {
             char c = s.charAt(i);
-            Integer index = checkedMap.get(c);
-            if (index == null) {
-                checkedMap.put(c, checkedSubstring.size());
-                checkedSubstring.offer(c);
-                if (checkedSubstring.size() > longestSubstring.size()) {
-                    longestSubstring = new LinkedList<>(checkedSubstring);
-                }
-            } else {
-                while (checkedSubstring.peek() == null || c != checkedSubstring.peek()) {
-                    checkedMap.remove(checkedSubstring.poll());
-                }
-                checkedSubstring.poll();
-                checkedSubstring.offer(c);
+            Integer index = charIndex.get(c);
+            if (index != null && index+1 > start) {
+                start = index + 1;
+            }
+            charIndex.put(c, i);
+
+            if (i - start + 1 > max) {
+                max = i - start + 1;
             }
         }
-
-        return longestSubstring.size();
+        return max;
     }
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        System.out.println(solution.lengthOfLongestSubstring("pwwb"));
+        System.out.println(solution.lengthOfLongestSubstring("abbc"));
     }
 }

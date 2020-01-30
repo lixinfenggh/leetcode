@@ -20,4 +20,6 @@
 来源：力扣（LeetCode）
 链接：https://leetcode-cn.com/problems/longest-substring-without-repeating-characters
 
-解决思路：从左往右搜，用队列a存已知最长子串，队列b存当前子串；当新的char不在b中，则加入b，并比较b与a的长度，如果b比a长，则把a设为b；如果新的char在b中，则把b一直出列，直到把b中原来的char也出列。
+解决思路：
+思路1：从左往右搜，用队列a存已知最长子串，队列b存当前子串；当新的char不在b中，则加入b，并比较b与a的长度，如果b比a长，则把a设为b；如果新的char在b中，则把b一直出列，直到把b中原来的char也出列。
+思路2：用滑动窗口的方法，不需要缓存中间变量，只需要存着字符串的位置。
