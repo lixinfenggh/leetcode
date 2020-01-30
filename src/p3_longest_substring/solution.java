@@ -9,7 +9,7 @@ class Solution {
         Queue<Character> checkedSubstring = new LinkedList<>();
         Map<Character, Integer> checkedMap = new HashMap<>();
         for (int i = 0; i < s.length(); i++) {
-            Character c = s.charAt(i);
+            char c = s.charAt(i);
             Integer index = checkedMap.get(c);
             if (index == null) {
                 checkedMap.put(c, checkedSubstring.size());
@@ -18,7 +18,7 @@ class Solution {
                     longestSubstring = new LinkedList<>(checkedSubstring);
                 }
             } else {
-                while (c != checkedSubstring.peek()) {
+                while (checkedSubstring.peek() == null || c != checkedSubstring.peek()) {
                     checkedMap.remove(checkedSubstring.poll());
                 }
                 checkedSubstring.poll();
