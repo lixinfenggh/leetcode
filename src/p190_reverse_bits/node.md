@@ -26,4 +26,4 @@
 链接：https://leetcode-cn.com/problems/reverse-bits
 
 思路：
-方法1：数学方法，根据补码方法求，发现很慢
+方法1：数学方法，根据补码方法求

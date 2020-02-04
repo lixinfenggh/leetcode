@@ -5,9 +5,6 @@ import java.util.Arrays;
 class Solution {
     // you need treat n as an unsigned value
     public int reverseBits(int n) {
-        String b = Integer.toBinaryString(n);
-        System.out.println(b);
-
         boolean isNegative = false;
         if (n < 0) {
             isNegative = true;
