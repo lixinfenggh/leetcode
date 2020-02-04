@@ -19,4 +19,6 @@
 来源：力扣（LeetCode）
 链接：https://leetcode-cn.com/problems/reverse-integer
 
-思路：通过转成string，然后反序遍历到另一个String，再用Try来识别溢出的情况。
+思路：
+方法1：通过转成string，然后反序遍历到另一个String，再用Try来识别溢出的情况。
+方法2：通数数学方法，不断求模，乘十。

@@ -4,18 +4,24 @@ import java.math.BigInteger;
 
 class Solution {
     public int reverse(int x) {
-        int absX = Math.abs(x);
-        String stringX = Integer.toString(absX);
-        StringBuilder reverseStringX = new StringBuilder();
-        for (int i = stringX.length()-1; i >= 0; i--) {
-            reverseStringX.append(stringX.charAt(i));
-        }
         try {
-            if (x < 0)
-                return -Integer.parseInt(reverseStringX.toString());
-            else
-                return Integer.parseInt(reverseStringX.toString());
-        } catch (Exception e) {
+            int max10 = Integer.MAX_VALUE / 10;
+            int max1 = Integer.MAX_VALUE % 10;
+            boolean isNegative = false;
+            if (x < 0) {
+                isNegative = true;
+                x = -x;
+            }
+            int result = 0;
+            while (x > 0) {
+                int mod = x % 10;
+                if (result > max10 || (result == max10 && mod > max1))
+                    return 0;
+                result = result * 10 + mod;
+                x = x / 10;
+            }
+            return isNegative ? -result : result;
+        } catch (NumberFormatException e) {
             return 0;
         }
     }
