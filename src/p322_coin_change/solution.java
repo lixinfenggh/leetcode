@@ -6,28 +6,38 @@ class Solution {
     public int coinChange(int[] coins, int amount) {
         Arrays.sort(coins);
         if (amount == 0) return 0;
-        int coinNum = Solution.getCoinsNum(coins, amount, 0);
-        if (coinNum == Integer.MAX_VALUE) return -1;
-        else return coinNum;
+        int[] coinsNum = new int[amount+1];
+        Arrays.fill(coinsNum, Integer.MIN_VALUE);
+        Solution.getCoinsNum(coins, amount, coinsNum);
+        return coinsNum[amount];
     }
 
-    private static int getCoinsNum(int[] coins, int amount, int coinsNum) {
-        if (amount < 0 || amount < coins[0]) return Integer.MAX_VALUE;
-        if (Solution.halfSearch(coins, amount) != -1) return coinsNum+1;
+    private static void getCoinsNum(int[] coins, int amount, int[] coinsNum) {
+        if (amount < 0) return;
+        if (amount < coins[0]) {
+            coinsNum[amount] = -1;
+            return;
+        }
+        if (coinsNum[amount] >= -1) return;
+        if (Solution.halfSearch(coins, amount) != -1) {
+            coinsNum[amount] = 1;
+            return;
+        }
         int[] minNum = new int[coins.length];
         for (int i = 0; i < coins.length; i++) {
-            minNum[i] = Solution.getCoinsNum(coins, amount-coins[i], coinsNum+1);
+            if (amount < coins[i]) {
+                minNum[i] = -1;
+                continue;
+            } else if (coinsNum[amount-coins[i]] <= 0)
+                Solution.getCoinsNum(coins, amount-coins[i], coinsNum);
+            minNum[i] = coinsNum[amount-coins[i]];
         }
-        return Solution.min(minNum);
-    }
-
-    private static int min(int[] arr)  {
-        int min = Integer.MAX_VALUE;
-        for (int value : arr) {
-            if (value < min)
+        int min = amount;
+        for (int value : minNum) {
+            if (value != -1 && value < min)
                 min = value;
         }
-        return min;
+        coinsNum[amount] = min == amount ? -1 : min + 1;
     }
 
     // 该函数来源：https://blog.csdn.net/Xin6Yang/article/details/88778033
@@ -55,6 +65,6 @@ class Solution {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        System.out.println(solution.coinChange(new int[]{2}, 3));
+        System.out.println(solution.coinChange(new int[]{186, 419, 83, 408}, 6249));
     }
 }

@@ -15,3 +15,4 @@
 
 思路：1、假设函数为p，则p(amount) = min(p(amount-coins[0]), p(amount-coins[1]), ..., p(amount-coins[-1])) + 1;
 这种方法比较浅显易懂。但是，当amount比较大的时候，会超时。
+2、动态规划。其实就是在1的基础上，存储了中间结果而已。
