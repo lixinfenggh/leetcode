@@ -1,18 +1,24 @@
 public class Solution {
-    public int massage(int[] nums) {
-        if (nums.length == 0) return 0;
-        if (nums.length == 1) return nums[0];
-        if (nums.length == 2) return Math.max(nums[0], nums[1]);
-        int maxLength1 = nums[0], maxLength2 = Math.max(nums[0], nums[1]);
-        for (int i = 2; i < nums.length; i++) {
-            int old1 = maxLength1;
-            maxLength1 = maxLength2;
-            maxLength2 = Math.max(old1+nums[i], maxLength2);
+    public int surfaceArea(int[][] grid) {
+        if (grid.length == 1 && grid[0].length == 0) return 0;
+        int boxNum = 0;
+        int cover = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                if (i > 0)
+                    cover += Math.min(grid[i][j], grid[i-1][j]);
+                if (j > 0)
+                    cover += Math.min(grid[i][j], grid[i][j-1]);
+                if (grid[i][j] > 0)
+                    cover += grid[i][j] - 1;
+                boxNum += grid[i][j];
+            }
         }
-        return Math.max(maxLength1, maxLength2);
+
+        return boxNum * 6 - cover * 2;
     }
 
     public static void main(String[] args) {
-        System.out.println(new Solution().massage(new int[] {1, 3, 1, 3, 100}));
+        System.out.println(new Solution().surfaceArea(new int[][] {{1, 1, 1}, {1, 0, 1}, {1, 1, 1}}));
     }
 }
