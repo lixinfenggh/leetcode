@@ -1,6 +1,5 @@
 public class Test {
     public static void main(String[] args) {
-        Solution solution = new Solution();
-        System.out.println(solution.lastRemaining(5, 3));
+        new Solution().gameOfLife(new int[][]{{0,1,0}, {0,0,1}, {1,1,1}, {0,0,0}});
     }
 }

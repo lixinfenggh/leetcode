@@ -1,35 +1,39 @@
-import java.util.Stack;
-
 class Solution {
-    public int[] maxDepthAfterSplit(String seq) {
-        if (seq.equals("")) return new int[]{};
-        if (seq.equals("()")) return new int[]{0, 0};
-        int[] result = new int[seq.length()];
-        Stack<Character> s1= new Stack<>(), s2 = new Stack<>();
-        Stack<Character> lastIn = s1;
-        for (int i = 0; i < seq.length(); i++) {
-            if (seq.charAt(i) == '(') {
-                if (lastIn == s1) {
-                    s2.push('(');
-                    result[i] = 1;
-                    lastIn = s2;
-                } else {
-                    s1.push('(');
-                    result[i] = 0;
-                    lastIn = s1;
+    public void gameOfLife(int[][] board) {
+        int [][] result = new int[board.length][board[0].length];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                int sum = 0;
+                if (i > 0) {
+                    sum += board[i-1][j];
+                    if (j > 0)
+                        sum += board[i-1][j-1];
+                    if (j+1 < board[i].length)
+                        sum += board[i-1][j+1];
                 }
-            } else {
-                if (lastIn == s1) {
-                    s1.pop();
-                    result[i] = 0;
-                    lastIn = s2;
+                if (j > 0)
+                    sum += board[i][j-1];
+                if (j+1 < board[i].length)
+                    sum += board[i][j+1];
+                if (i < board.length-1) {
+                    sum += board[i+1][j];
+                    if (j > 0)
+                        sum += board[i+1][j-1];
+                    if (j+1 < board[i].length)
+                        sum += board[i+1][j+1];
+                }
+                if (sum < 2 || sum > 3) {
+                    result[i][j] = 0;
+                } else if (sum == 3){
+                    result[i][j] = 1;
                 } else {
-                    s2.pop();
-                    result[i] = 1;
-                    lastIn = s1;
+                    result[i][j] = board[i][j];
                 }
             }
         }
-        return result;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++)
+                board[i][j] = result[i][j];
+        }
     }
 }
