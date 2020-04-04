@@ -1,39 +1,26 @@
 class Solution {
-    public void gameOfLife(int[][] board) {
-        int [][] result = new int[board.length][board[0].length];
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                int sum = 0;
-                if (i > 0) {
-                    sum += board[i-1][j];
-                    if (j > 0)
-                        sum += board[i-1][j-1];
-                    if (j+1 < board[i].length)
-                        sum += board[i-1][j+1];
-                }
-                if (j > 0)
-                    sum += board[i][j-1];
-                if (j+1 < board[i].length)
-                    sum += board[i][j+1];
-                if (i < board.length-1) {
-                    sum += board[i+1][j];
-                    if (j > 0)
-                        sum += board[i+1][j-1];
-                    if (j+1 < board[i].length)
-                        sum += board[i+1][j+1];
-                }
-                if (sum < 2 || sum > 3) {
-                    result[i][j] = 0;
-                } else if (sum == 3){
-                    result[i][j] = 1;
-                } else {
-                    result[i][j] = board[i][j];
-                }
-            }
+    public int trap(int[] height) {
+        if (height.length < 3) return 0;
+        int[] leftMax = new int[height.length],
+                rightMax = new int[height.length];
+        int max = 0;
+        for (int i = 1; i < height.length; i++) {
+            if (height[i-1] > max)
+                max = height[i-1];
+            leftMax[i] = max;
         }
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++)
-                board[i][j] = result[i][j];
+        max = 0;
+        for (int i = height.length-2; i >= 0; i--) {
+            if (height[i+1] > max)
+                max = height[i+1];
+            rightMax[i] = max;
         }
+        int result = 0;
+        for (int i = 1; i < height.length; i++) {
+            int w = Math.min(leftMax[i], rightMax[i]);
+            if (height[i] < w)
+                result += (w-height[i]);
+        }
+        return result;
     }
 }
